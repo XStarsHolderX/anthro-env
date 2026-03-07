@@ -24,6 +24,22 @@ brew install anthro-env
 
 普通用户安装不需要本地 Go 环境。
 
+## Profile 目录（加载机制）
+
+`anthro-env` 会从这个目录加载 profile：
+
+```text
+~/.config/anthropic/profiles/*.env
+```
+
+规则：
+- 目录下任意 `*.env` 都会被识别为一个 profile
+- 文件名去掉 `.env` 就是 profile 名称
+- `anthro-env ls` / `menu` / `use` 会自动发现这些文件
+
+示例：
+- `~/.config/anthropic/profiles/ai-router.env` -> profile 名：`ai-router`
+
 ## 30 秒开始
 
 ```bash

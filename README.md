@@ -48,6 +48,22 @@ go build -o ./bin/anthro-env ./cmd/anthro-env
 ./bin/anthro-env --help
 ```
 
+## Profile Directory (How loading works)
+
+`anthro-env` loads profiles from:
+
+```text
+~/.config/anthropic/profiles/*.env
+```
+
+How it works:
+- any `*.env` file in this directory is treated as a profile
+- file name (without `.env`) is the profile name
+- profiles are auto-discovered by `anthro-env ls` / `menu` / `use`
+
+Example:
+- `~/.config/anthropic/profiles/ai-router.env` -> profile name: `ai-router`
+
 ## Quick Start
 
 ```bash

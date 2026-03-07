@@ -186,6 +186,10 @@ func (m *Manager) SaveToken(name, token string) error {
 	return secure.SaveToken(name, token)
 }
 
+func (m *Manager) DeleteToken(name string) error {
+	return secure.DeleteToken(name)
+}
+
 func (m *Manager) MigratePlaintextTokens() (int, int, error) {
 	profiles, err := m.ListProfiles()
 	if err != nil {

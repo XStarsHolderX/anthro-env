@@ -38,7 +38,7 @@ func run(args []string) error {
 		return runMenu(mgr)
 	case "init":
 		return runInit(mgr)
-	case "add", "use", "ls", "current", "rm":
+	case "add", "edit", "use", "ls", "current", "rm":
 		return runProfile(mgr, args)
 	case "doctor":
 		return runDoctor(mgr)
@@ -184,7 +184,7 @@ func runMenu(mgr *core.Manager) error {
 
 func runProfile(mgr *core.Manager, args []string) error {
 	if len(args) == 0 {
-		return errors.New("usage: anthro-env <add|use|ls|current|rm>")
+		return errors.New("usage: anthro-env <add|edit|use|ls|current|rm>")
 	}
 
 	switch args[0] {
@@ -267,6 +267,70 @@ func runProfile(mgr *core.Manager, args []string) error {
 		}
 		fmt.Printf("Added profile: %s\n", name)
 		return nil
+	case "edit":
+		if len(args) < 2 {
+			return errors.New("usage: anthro-env edit <name>")
+		}
+		name := args[1]
+		vars, err := mgr.ReadProfile(name)
+		if err != nil {
+			return fmt.Errorf("profile not found: %s", name)
+		}
+		reader := bufio.NewReader(os.Stdin)
+
+		currentBaseURL := strings.TrimSpace(vars["ANTHROPIC_BASE_URL"])
+		fmt.Printf("ANTHROPIC_BASE_URL [keep: %s]: ", core.OrDefault(currentBaseURL, "<empty>"))
+		baseURL, _ := reader.ReadString('\n')
+		baseURL = strings.TrimSpace(baseURL)
+		if baseURL != "" {
+			vars["ANTHROPIC_BASE_URL"] = baseURL
+		}
+
+		currentModel := strings.TrimSpace(vars["ANTHROPIC_MODEL"])
+		if currentModel == "" {
+			currentModel = strings.TrimSpace(vars["ANTHROPIC_SMALL_FAST_MODEL"])
+		}
+		fmt.Printf("ANTHROPIC_MODEL [keep: %s, '-' to clear]: ", core.OrDefault(currentModel, "<empty>"))
+		model, _ := reader.ReadString('\n')
+		model = strings.TrimSpace(model)
+		switch model {
+		case "":
+			// keep
+		case "-":
+			delete(vars, "ANTHROPIC_MODEL")
+			delete(vars, "ANTHROPIC_SMALL_FAST_MODEL")
+			delete(vars, "ANTHROPIC_DEFAULT_SONNET_MODEL")
+			delete(vars, "ANTHROPIC_DEFAULT_OPUS_MODEL")
+			delete(vars, "ANTHROPIC_DEFAULT_HAIKU_MODEL")
+		default:
+			vars["ANTHROPIC_MODEL"] = model
+			vars["ANTHROPIC_SMALL_FAST_MODEL"] = model
+			vars["ANTHROPIC_DEFAULT_SONNET_MODEL"] = model
+			vars["ANTHROPIC_DEFAULT_OPUS_MODEL"] = model
+			vars["ANTHROPIC_DEFAULT_HAIKU_MODEL"] = model
+		}
+
+		fmt.Print("ANTHROPIC_AUTH_TOKEN [leave empty to keep, '-' to clear]: ")
+		token, _ := reader.ReadString('\n')
+		token = strings.TrimSpace(token)
+		switch token {
+		case "":
+			// keep
+		case "-":
+			if err := mgr.DeleteToken(name); err != nil {
+				return err
+			}
+		default:
+			if err := mgr.SaveToken(name, token); err != nil {
+				return err
+			}
+		}
+
+		if err := mgr.SaveProfile(name, vars); err != nil {
+			return err
+		}
+		fmt.Printf("Updated profile: %s\n", name)
+		return nil
 	case "rm":
 		if len(args) < 2 {
 			return errors.New("usage: anthro-env rm <name>")
@@ -317,6 +381,7 @@ func printUsage() {
   anthro-env init
   anthro-env menu
   anthro-env add <name>
+  anthro-env edit <name>
   anthro-env use <name>
   anthro-env ls
   anthro-env current

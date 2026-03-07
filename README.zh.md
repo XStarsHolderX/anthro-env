@@ -38,6 +38,7 @@ anthro-env menu
 anthro-env init
 anthro-env menu
 anthro-env add <name>
+anthro-env edit <name>
 anthro-env use <name>
 anthro-env ls
 anthro-env current

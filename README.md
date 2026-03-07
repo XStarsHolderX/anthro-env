@@ -4,9 +4,11 @@ English | [中文](README.zh.md)
 
 [![Release](https://img.shields.io/github/v/release/kelaocai/anthro-env)](https://github.com/kelaocai/anthro-env/releases)
 [![Homebrew Tap](https://img.shields.io/badge/Homebrew-kelaocai%2Fhomebrew--tap-blue)](https://github.com/kelaocai/homebrew-tap)
+![Homebrew](https://img.shields.io/badge/homebrew-install-blue)
 
 A CLI-first macOS tool for switching Claude Code / Anthropic environment profiles.
 A CLI tool for managing Claude-compatible API environments and switching between AI providers.
+Compatible with Claude-compatible APIs.
 
 ## Why this exists
 

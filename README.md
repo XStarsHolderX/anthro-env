@@ -14,6 +14,7 @@ Common search intents this project solves:
 
 ## Quick Links
 
+- 中文 README: [README.zh-CN.md](README.zh-CN.md)
 - Quick Start (中文): [docs/快速上手.md](docs/快速上手.md)
 - Full Guide (中文): [docs/项目中文手册.md](docs/项目中文手册.md)
 - FAQ (EN): [docs/faq.md](docs/faq.md)
@@ -39,6 +40,18 @@ brew install anthro-env
 ```
 
 No local Go toolchain is required for users during Homebrew install.
+
+## Build from Source (for power users)
+
+If you prefer local compilation or want to contribute:
+
+```bash
+git clone https://github.com/kelaocai/anthro-env.git
+cd anthro-env
+go test ./...
+go build -o ./bin/anthro-env ./cmd/anthro-env
+./bin/anthro-env --help
+```
 
 ## 30-Second Start
 

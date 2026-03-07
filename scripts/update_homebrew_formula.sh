@@ -28,7 +28,7 @@ wait_for_asset() {
   local elapsed=0
   while true; do
     code="$(curl -s -o /dev/null -w "%{http_code}" "$url" || true)"
-    if [[ "$code" == "200" ]]; then
+    if [[ "$code" == "200" || "$code" == "301" || "$code" == "302" ]]; then
       return 0
     fi
     if (( elapsed >= max_wait_seconds )); then

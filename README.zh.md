@@ -106,7 +106,7 @@ anthro-env migrate-tokens
 anthro-env doctor
 ```
 
-## 配置示例（已脱敏）
+## 配置示例
 
 以下示例基于真实可用配置，API Key 已脱敏。  
 注意：在 `anthro-env` 中，推荐把 token 存到 Keychain。

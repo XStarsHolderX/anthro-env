@@ -90,6 +90,23 @@ If you already have plaintext `ANTHROPIC_AUTH_TOKEN` in old profile files:
 anthro-env migrate-tokens
 ```
 
+### Common commands
+
+These are the most commonly used subcommands:
+
+```bash
+anthro-env init            # Initialize anthro-env (first-time setup)
+anthro-env menu            # Open the interactive menu
+anthro-env add <name>      # Add a new environment; <name> is the env name
+anthro-env edit <name>     # Edit an existing environment; <name> is the env name
+anthro-env use <name>      # Switch to and activate an environment; <name> is the env name
+anthro-env ls              # List all saved environments
+anthro-env current         # Show the currently active environment
+anthro-env rm <name>       # Remove an environment; <name> is the env name
+anthro-env doctor          # Run diagnostics (check config/dependencies)
+anthro-env -v              # Show version
+```
+
 ### Detailed usage: `edit`
 
 ```bash

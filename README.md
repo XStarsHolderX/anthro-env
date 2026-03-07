@@ -67,3 +67,4 @@ MIT
 
 - On tag push (`v*`), GitHub Actions updates `Formula/anthro-env.rb` in `kelaocai/homebrew-tap`.
 - Required repository secret: `HOMEBREW_TAP_TOKEN` (a PAT with repo write access to `kelaocai/homebrew-tap`).
+- If sync fails, the workflow now prints explicit reasons (missing secret, no access to tap repo, or push denied).

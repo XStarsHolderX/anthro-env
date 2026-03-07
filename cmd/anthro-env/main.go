@@ -68,6 +68,7 @@ func runInit(mgr *core.Manager) error {
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("Anthro Env initialization")
+	fmt.Println("Tip: ANTHROPIC_MODEL is optional. Leave empty to use provider/gateway default model.")
 	fmt.Print("Profile name [default]: ")
 	name, _ := reader.ReadString('\n')
 	name = strings.TrimSpace(name)
@@ -82,7 +83,7 @@ func runInit(mgr *core.Manager) error {
 	baseURL, _ := reader.ReadString('\n')
 	baseURL = strings.TrimSpace(baseURL)
 
-	fmt.Print("ANTHROPIC_MODEL: ")
+	fmt.Print("ANTHROPIC_MODEL (optional, press Enter to skip): ")
 	model, _ := reader.ReadString('\n')
 	model = strings.TrimSpace(model)
 
@@ -228,7 +229,8 @@ func runProfile(mgr *core.Manager, args []string) error {
 		fmt.Print("ANTHROPIC_BASE_URL: ")
 		baseURL, _ := reader.ReadString('\n')
 		baseURL = strings.TrimSpace(baseURL)
-		fmt.Print("ANTHROPIC_MODEL: ")
+		fmt.Println("Tip: ANTHROPIC_MODEL is optional. Leave empty to use provider/gateway default model.")
+		fmt.Print("ANTHROPIC_MODEL (optional, press Enter to skip): ")
 		model, _ := reader.ReadString('\n')
 		model = strings.TrimSpace(model)
 		fmt.Print("ANTHROPIC_AUTH_TOKEN (stored in Keychain): ")

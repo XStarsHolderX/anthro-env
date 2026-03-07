@@ -93,6 +93,16 @@ ANTHROPIC_DEFAULT_OPUS_MODEL=MiniMax-M2.5
 ANTHROPIC_DEFAULT_HAIKU_MODEL=MiniMax-M2.5
 ```
 
+### Example 3: ai-router (gateway default model routing)
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://ai-router.plugins-world.cn
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+# No ANTHROPIC_MODEL set here on purpose.
+# Model selection is handled by gateway-side default routing rules.
+```
+
 ## Concepts
 
 - `profile`: a named environment config (base URL, model config, etc.)

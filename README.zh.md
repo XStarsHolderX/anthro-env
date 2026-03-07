@@ -77,6 +77,16 @@ ANTHROPIC_DEFAULT_OPUS_MODEL=MiniMax-M2.5
 ANTHROPIC_DEFAULT_HAIKU_MODEL=MiniMax-M2.5
 ```
 
+### 示例 3：ai-router（走网关默认模型路由）
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://ai-router.plugins-world.cn
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+# 这里故意不设置 ANTHROPIC_MODEL
+# 具体模型由网关侧默认路由策略决定
+```
+
 ## 源码编译（给极客用户）
 
 如果你希望本地编译或参与开发：

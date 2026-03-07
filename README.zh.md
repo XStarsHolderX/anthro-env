@@ -94,6 +94,13 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 # 具体模型由网关侧默认路由策略决定
 ```
 
+## 安全与优先级规则
+
+- Token 推荐存放在 macOS Keychain。
+- profile 文件建议只放非敏感配置。
+- Token 生效优先级：`Keychain > .env`。  
+  如果两边都存在，以 Keychain 为准。
+
 ## 源码编译（给极客用户）
 
 如果你希望本地编译或参与开发：

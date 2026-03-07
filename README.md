@@ -135,6 +135,8 @@ What makes this project different:
 - Tokens are stored in macOS Keychain.
 - Profile files store metadata/config only.
 - API keys are not intended to be stored in plain text profile files.
+- Token precedence rule: `Keychain > .env`.
+  If both exist, the Keychain token is used.
 
 ## Who It Is For
 

@@ -15,21 +15,62 @@ if [[ "$VERSION" != v* ]]; then
   exit 1
 fi
 
-URL="https://github.com/${OWNER}/${REPO}/archive/refs/tags/${VERSION}.tar.gz"
-SHA256="$(curl -L --max-time 60 -s "$URL" | shasum -a 256 | awk '{print $1}')"
+SHORT_VERSION="${VERSION#v}"
+BASE_URL="https://github.com/${OWNER}/${REPO}/releases/download/${VERSION}"
+ARM_ASSET="anthro-env_${SHORT_VERSION}_darwin_arm64.tar.gz"
+AMD_ASSET="anthro-env_${SHORT_VERSION}_darwin_amd64.tar.gz"
+ARM_URL="${BASE_URL}/${ARM_ASSET}"
+AMD_URL="${BASE_URL}/${AMD_ASSET}"
+
+wait_for_asset() {
+  local url="$1"
+  local max_wait_seconds=180
+  local elapsed=0
+  while true; do
+    code="$(curl -s -o /dev/null -w "%{http_code}" "$url" || true)"
+    if [[ "$code" == "200" ]]; then
+      return 0
+    fi
+    if (( elapsed >= max_wait_seconds )); then
+      echo "Timed out waiting for release asset: $url"
+      return 1
+    fi
+    sleep 5
+    elapsed=$((elapsed + 5))
+  done
+}
+
+sha_from_url() {
+  local url="$1"
+  curl -L --max-time 120 -s "$url" | shasum -a 256 | awk '{print $1}'
+}
+
+wait_for_asset "$ARM_URL"
+wait_for_asset "$AMD_URL"
+ARM_SHA256="$(sha_from_url "$ARM_URL")"
+AMD_SHA256="$(sha_from_url "$AMD_URL")"
 
 cat > packaging/homebrew/anthro-env.rb <<FORMULA
 class AnthroEnv < Formula
   desc "macOS Anthropic environment profile manager"
   homepage "https://github.com/${OWNER}/${REPO}"
-  url "${URL}"
-  sha256 "${SHA256}"
+  version "${SHORT_VERSION}"
   license "MIT"
 
-  depends_on "go" => :build
+  on_macos do
+    on_arm do
+      url "${ARM_URL}"
+      sha256 "${ARM_SHA256}"
+    end
+
+    on_intel do
+      url "${AMD_URL}"
+      sha256 "${AMD_SHA256}"
+    end
+  end
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/anthro-env"
+    bin.install "anthro-env"
   end
 
   test do

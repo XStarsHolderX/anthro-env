@@ -14,16 +14,3 @@ jobs:
           go-version: '1.22'
       - run: go test ./...
       - run: go build ./cmd/anthro-env
-
-  release-build:
-    if: startsWith(github.ref, 'refs/tags/')
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-      - run: mkdir -p dist
-      - run: GOOS=darwin GOARCH=arm64 go build -o dist/anthro-env-darwin-arm64 ./cmd/anthro-env
-      - run: GOOS=darwin GOARCH=amd64 go build -o dist/anthro-env-darwin-amd64 ./cmd/anthro-env
-      - run: shasum -a 256 dist/* > dist/checksums.txt

@@ -38,6 +38,8 @@ brew tap kelaocai/homebrew-tap
 brew install anthro-env
 ```
 
+No local Go toolchain is required for users during Homebrew install.
+
 ## 30-Second Start
 
 ```bash

@@ -2,12 +2,28 @@
 
 This doc is for maintainers only.
 
+## Workflow trigger matrix
+
+- Normal push to `main`:
+  - triggers: `ci`
+  - does not trigger: `release`, `update-homebrew-tap`
+
+- Push tag matching `v*` (example: `v0.1.4`):
+  - triggers: `ci`, `release`, `update-homebrew-tap`
+
 ## Release flow
 
 1. Commit changes to `main`
-2. Create and push tag (example `v0.1.3-alpha`)
+2. Create and push tag (example `v0.1.4`)
 3. `release` workflow builds macOS binaries and uploads release assets
 4. `update-homebrew-tap` updates `kelaocai/homebrew-tap` Formula
+
+Example:
+
+```bash
+git tag v0.1.4
+git push origin v0.1.4
+```
 
 ## Required secret
 

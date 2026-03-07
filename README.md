@@ -191,6 +191,7 @@ What makes this project different:
 ## Contributing
 
 Issues and PRs are welcome.
+Release mechanism details: [docs/release.md](docs/release.md)
 
 ## License
 

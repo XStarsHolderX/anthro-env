@@ -153,3 +153,5 @@ go build -o ./bin/anthro-env ./cmd/anthro-env
 ## License
 
 MIT
+
+发布机制与流水线说明：见 [docs/release.md](docs/release.md)

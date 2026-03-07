@@ -40,7 +40,7 @@ brew install anthro-env
 示例：
 - `~/.config/anthropic/profiles/ai-router.env` -> profile 名：`ai-router`
 
-## 30 秒开始
+## 开箱即用
 
 ```bash
 anthro-env init
@@ -69,7 +69,7 @@ anthro-env -v
 anthro-env migrate-tokens
 ```
 
-### 详细用法：`edit`
+### 修改已经设定过的配置：`edit`
 
 ```bash
 anthro-env edit <name>
@@ -88,7 +88,7 @@ anthro-env use ai-router
 anthro-env doctor
 ```
 
-### 详细用法：`migrate-tokens`
+### 把明文自动存入Keychain用法：`migrate-tokens`
 
 ```bash
 anthro-env migrate-tokens
@@ -100,7 +100,7 @@ anthro-env migrate-tokens
 - 从 profile 文件删除明文 token
 - 输出迁移统计（`migrated` / `skipped`）
 
-建议迁移后执行：
+建议迁移后执行doctor 检查是否合规：
 
 ```bash
 anthro-env doctor
@@ -152,7 +152,7 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 - Token 推荐存放在 macOS Keychain。
 - profile 文件建议只放非敏感配置。
 - Token 生效优先级：`Keychain > .env`。  
-  如果两边都存在，以 Keychain 为准。
+  如果两边都存在，以 Keychain 为准（通过edit修改）。
 
 ## 手动新增 profile 文件（自动发现）
 
@@ -169,7 +169,7 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 anthro-env migrate-tokens
 ```
 
-## 源码编译（给极客用户）
+## 源码编译
 
 如果你希望本地编译或参与开发：
 

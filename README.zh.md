@@ -51,16 +51,19 @@ anthro-env menu
 ## 常用命令
 
 ```bash
-anthro-env init
-anthro-env menu
-anthro-env add <name>
-anthro-env edit <name>
-anthro-env use <name>
-anthro-env ls
-anthro-env current
-anthro-env rm <name>
-anthro-env doctor
-anthro-env -v
+
+  anthro-env init            # 初始化 anthro-env 环境（首次使用）
+  anthro-env menu            # 打开交互式菜单（可视化选择操作）
+  anthro-env add <name>      # 新增一个环境配置；<name> 为环境名称
+  anthro-env edit <name>     # 编辑指定环境配置；<name> 为环境名称
+  anthro-env use <name>      # 切换并启用指定环境；<name> 为环境名称
+  anthro-env ls              # 列出所有已保存的环境
+  anthro-env current         # 显示当前正在使用的环境
+  anthro-env rm <name>       # 删除指定环境；<name> 为环境名称
+  anthro-env doctor          # 执行诊断检查（排查配置/依赖问题）
+  anthro-env -v              # 显示版本号
+
+  <name> 表示你自定义的环境名，例如：minimax、qwen、kimi。
 ```
 
 如果你之前的 profile 文件里有明文 `ANTHROPIC_AUTH_TOKEN`：

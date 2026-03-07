@@ -17,8 +17,8 @@ fi
 
 SHORT_VERSION="${VERSION#v}"
 BASE_URL="https://github.com/${OWNER}/${REPO}/releases/download/${VERSION}"
-ARM_ASSET="anthro-env_${SHORT_VERSION}_darwin_arm64.tar.gz"
-AMD_ASSET="anthro-env_${SHORT_VERSION}_darwin_amd64.tar.gz"
+ARM_ASSET="anthro-env_${SHORT_VERSION}_macos_arm64.tar.gz"
+AMD_ASSET="anthro-env_${SHORT_VERSION}_macos_x86_64.tar.gz"
 ARM_URL="${BASE_URL}/${ARM_ASSET}"
 AMD_URL="${BASE_URL}/${AMD_ASSET}"
 

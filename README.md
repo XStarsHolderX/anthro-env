@@ -40,6 +40,9 @@ brew install anthro-env
 ```
 
 No local Go toolchain is required for users during Homebrew install.
+Release assets use explicit naming:
+- `anthro-env_<version>_macos_arm64.tar.gz` (Apple Silicon)
+- `anthro-env_<version>_macos_x86_64.tar.gz` (Intel Mac)
 
 ## Build from Source (for power users)
 

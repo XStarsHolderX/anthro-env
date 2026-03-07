@@ -62,6 +62,37 @@ Or use the menu:
 anthro-env menu
 ```
 
+## Profile Examples (redacted)
+
+These examples are based on real-world provider setups, with API keys masked.
+Keep in mind: in `anthro-env`, token is recommended to be stored in Keychain.
+
+### Example 1: bailian-kimi-k2.5
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://coding.dashscope.aliyuncs.com/apps/anthropic
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ANTHROPIC_MODEL=kimi-k2.5
+ANTHROPIC_SMALL_FAST_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_SONNET_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_OPUS_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_HAIKU_MODEL=kimi-k2.5
+```
+
+### Example 2: MiniMax-M2.5
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://api.minimax.io/anthropic
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ANTHROPIC_MODEL=MiniMax-M2.5
+ANTHROPIC_SMALL_FAST_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_SONNET_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_OPUS_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_HAIKU_MODEL=MiniMax-M2.5
+```
+
 ## Concepts
 
 - `profile`: a named environment config (base URL, model config, etc.)

@@ -46,6 +46,37 @@ anthro-env doctor
 anthro-env -v
 ```
 
+## 配置示例（已脱敏）
+
+以下示例基于真实可用配置，API Key 已脱敏。  
+注意：在 `anthro-env` 中，推荐把 token 存到 Keychain。
+
+### 示例 1：bailian-kimi-k2.5
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://coding.dashscope.aliyuncs.com/apps/anthropic
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ANTHROPIC_MODEL=kimi-k2.5
+ANTHROPIC_SMALL_FAST_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_SONNET_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_OPUS_MODEL=kimi-k2.5
+ANTHROPIC_DEFAULT_HAIKU_MODEL=kimi-k2.5
+```
+
+### 示例 2：MiniMax-M2.5
+
+```bash
+ANTHROPIC_AUTH_TOKEN=sk-********
+ANTHROPIC_BASE_URL=https://api.minimax.io/anthropic
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+ANTHROPIC_MODEL=MiniMax-M2.5
+ANTHROPIC_SMALL_FAST_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_SONNET_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_OPUS_MODEL=MiniMax-M2.5
+ANTHROPIC_DEFAULT_HAIKU_MODEL=MiniMax-M2.5
+```
+
 ## 源码编译（给极客用户）
 
 如果你希望本地编译或参与开发：

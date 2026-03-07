@@ -40,6 +40,22 @@ brew install anthro-env
 示例：
 - `~/.config/anthropic/profiles/ai-router.env` -> profile 名：`ai-router`
 
+## 重要提示
+
+### SSH 环境限制
+
+`anthro-env` 使用 macOS Keychain 存储敏感的 API Token。由于 Keychain 需要用户交互授权，**初始化操作（`init`、`add`、`edit`）必须在本地终端执行，不能在 SSH 会话中运行**。
+
+如果在 SSH 会话中运行会报错：
+```
+Error: save token to Keychain failed: exit status 36
+(security: SecKeychainItemCreateFromContent (<default>): User interaction is not allowed.)
+```
+
+**解决方案：**
+1. 在本地 Mac 终端（非 SSH）执行 `anthro-env init` 或 `anthro-env add` 完成初始化
+2. 初始化完成后，在 SSH 会话中可以正常使用 `anthro-env use`、`anthro-env menu` 等命令切换环境
+
 ## 开箱即用
 
 ```bash

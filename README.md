@@ -70,6 +70,22 @@ How it works:
 Example:
 - `~/.config/anthropic/profiles/ai-router.env` -> profile name: `ai-router`
 
+## Important Notes
+
+### SSH Environment Limitation
+
+`anthro-env` uses macOS Keychain to store sensitive API tokens. Since Keychain requires user interaction for authorization, **initialization operations (`init`, `add`, `edit`) must be run in a local terminal, not in SSH sessions**.
+
+If you run these commands in an SSH session, you'll get an error:
+```
+Error: save token to Keychain failed: exit status 36
+(security: SecKeychainItemCreateFromContent (<default>): User interaction is not allowed.)
+```
+
+**Solution:**
+1. Run `anthro-env init` or `anthro-env add` in your local Mac terminal (not via SSH) to complete initialization
+2. After initialization, you can use `anthro-env use`, `anthro-env menu`, and other commands in SSH sessions to switch environments
+
 ## Quick Start
 
 ```bash

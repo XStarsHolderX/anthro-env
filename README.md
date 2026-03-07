@@ -1,5 +1,8 @@
 # anthro-env
 
+[![Release](https://img.shields.io/github/v/release/kelaocai/anthro-env)](https://github.com/kelaocai/anthro-env/releases)
+[![Homebrew Tap](https://img.shields.io/badge/Homebrew-kelaocai%2Fhomebrew--tap-blue)](https://github.com/kelaocai/homebrew-tap)
+
 - 快速上手（中文）: [docs/快速上手.md](docs/快速上手.md)
 - 完整中文手册: [docs/项目中文手册.md](docs/项目中文手册.md)
 - English README: this file
@@ -59,3 +62,8 @@ anthro-env doctor
 ## License
 
 MIT
+
+## Maintainer Notes
+
+- On tag push (`v*`), GitHub Actions updates `Formula/anthro-env.rb` in `kelaocai/homebrew-tap`.
+- Required repository secret: `HOMEBREW_TAP_TOKEN` (a PAT with repo write access to `kelaocai/homebrew-tap`).

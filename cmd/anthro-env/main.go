@@ -137,7 +137,9 @@ func runMenu(mgr *core.Manager) error {
 		return err
 	}
 	if len(profiles) == 0 {
-		return fmt.Errorf("no profiles. run: anthro-env init or anthro-env add <name>")
+		fmt.Println("No profiles found. Starting initialization...")
+		fmt.Println()
+		return runInit(mgr)
 	}
 	sort.Strings(profiles)
 	active, _ := mgr.CurrentProfile()

@@ -5,8 +5,8 @@
 [![Release](https://img.shields.io/github/v/release/kelaocai/anthro-env)](https://github.com/kelaocai/anthro-env/releases)
 [![Homebrew Tap](https://img.shields.io/badge/Homebrew-kelaocai%2Fhomebrew--tap-blue)](https://github.com/kelaocai/homebrew-tap)
 
-`anthro-env` 是一个面向 macOS 的 Claude Code / Anthropic 环境变量配置切换 CLI。
-它可以让你在多个兼容 Anthropic 协议的网关与模型之间一键切换，并把 token 存在 macOS Keychain。
+`anthro-env` 是一个面向 macOS 的 Claude Code / Anthropic 环境变量配置切换 CLI（命令行工具）。
+它可以让你在多个兼容 Anthropic 协议的网关与模型之间一键切换，并把 token 存在 macOS Keychain，避免泄露。
 
 ## 快速链接
 

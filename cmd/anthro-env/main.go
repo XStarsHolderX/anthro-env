@@ -13,6 +13,8 @@ import (
 	"github.com/anthro-env/anthro-env/internal/ui"
 )
 
+var version = "dev"
+
 func main() {
 	if err := run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
@@ -27,6 +29,9 @@ func run(args []string) error {
 	}
 
 	switch args[0] {
+	case "-v", "--version", "version":
+		fmt.Printf("anthro-env %s\n", version)
+		return nil
 	case "menu":
 		return runMenu(mgr)
 	case "init":
@@ -293,6 +298,7 @@ func runExport(mgr *core.Manager) error {
 
 func printUsage() {
 	fmt.Println(`anthro-env commands:
+  anthro-env -v | --version
   anthro-env init
   anthro-env menu
   anthro-env add <name>

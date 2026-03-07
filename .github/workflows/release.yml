@@ -23,8 +23,8 @@ jobs:
           VERSION="${GITHUB_REF_NAME#v}"
           mkdir -p dist/arm64 dist/amd64
 
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/arm64/anthro-env ./cmd/anthro-env
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/amd64/anthro-env ./cmd/anthro-env
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w -X main.version=${GITHUB_REF_NAME}" -o dist/arm64/anthro-env ./cmd/anthro-env
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X main.version=${GITHUB_REF_NAME}" -o dist/amd64/anthro-env ./cmd/anthro-env
 
           tar -C dist/arm64 -czf "dist/anthro-env_${VERSION}_macos_arm64.tar.gz" anthro-env
           tar -C dist/amd64 -czf "dist/anthro-env_${VERSION}_macos_x86_64.tar.gz" anthro-env

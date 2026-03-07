@@ -43,6 +43,7 @@ anthro-env ls
 anthro-env current
 anthro-env rm <name>
 anthro-env doctor
+anthro-env -v
 ```
 
 ## 源码编译（给极客用户）

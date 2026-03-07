@@ -27,6 +27,9 @@ Manual shell edits quickly become messy.
 
 `anthro-env` provides a simple profile-based workflow for managing these environments.
 
+
+<img width="1536" height="1024" alt="banner (1)" src="https://github.com/user-attachments/assets/8cbdc798-96ac-4a27-95a2-13667d942bcf" />
+
 ## Install
 
 ### Homebrew (recommended)

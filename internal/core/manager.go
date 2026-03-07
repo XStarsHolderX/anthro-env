@@ -186,6 +186,40 @@ func (m *Manager) SaveToken(name, token string) error {
 	return secure.SaveToken(name, token)
 }
 
+func (m *Manager) MigratePlaintextTokens() (int, int, error) {
+	profiles, err := m.ListProfiles()
+	if err != nil {
+		return 0, 0, err
+	}
+
+	migrated := 0
+	skipped := 0
+	for _, name := range profiles {
+		vars, err := m.ReadProfile(name)
+		if err != nil {
+			return migrated, skipped, fmt.Errorf("read profile %s: %w", name, err)
+		}
+
+		token := strings.TrimSpace(vars["ANTHROPIC_AUTH_TOKEN"])
+		if token == "" {
+			skipped++
+			continue
+		}
+
+		if err := secure.SaveToken(name, token); err != nil {
+			return migrated, skipped, fmt.Errorf("save keychain token for %s: %w", name, err)
+		}
+
+		delete(vars, "ANTHROPIC_AUTH_TOKEN")
+		if err := m.SaveProfile(name, vars); err != nil {
+			return migrated, skipped, fmt.Errorf("rewrite profile %s: %w", name, err)
+		}
+		migrated++
+	}
+
+	return migrated, skipped, nil
+}
+
 func (m *Manager) ExportSnippet() (string, error) {
 	active, err := m.CurrentProfile()
 	if err != nil {
@@ -235,6 +269,21 @@ func (m *Manager) Doctor() []DoctorReport {
 		reports = append(reports, DoctorReport{Status: "WARN", Message: "No profiles found"})
 	} else {
 		reports = append(reports, DoctorReport{Status: "OK", Message: fmt.Sprintf("Profiles found: %d", len(profiles))})
+		plaintextCount := 0
+		for _, p := range profiles {
+			vars, err := m.ReadProfile(p)
+			if err != nil {
+				continue
+			}
+			if strings.TrimSpace(vars["ANTHROPIC_AUTH_TOKEN"]) != "" {
+				plaintextCount++
+			}
+		}
+		if plaintextCount > 0 {
+			reports = append(reports, DoctorReport{Status: "WARN", Message: fmt.Sprintf("Plaintext token found in %d profile(s); run: anthro-env migrate-tokens", plaintextCount)})
+		} else {
+			reports = append(reports, DoctorReport{Status: "OK", Message: "No plaintext token found in profile files"})
+		}
 	}
 	if _, err := os.Stat(filepath.Join(os.Getenv("HOME"), ".zshrc")); err == nil {
 		zshData, _ := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".zshrc"))

@@ -62,6 +62,12 @@ Or use the menu:
 anthro-env menu
 ```
 
+If you already have plaintext `ANTHROPIC_AUTH_TOKEN` in old profile files:
+
+```bash
+anthro-env migrate-tokens
+```
+
 ## Profile Examples (redacted)
 
 These examples are based on real-world provider setups, with API keys masked.
@@ -109,6 +115,7 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 - `use`: switch active profile
 - `current`: show active profile
 - `doctor`: quick health check
+- `migrate-tokens`: move plaintext tokens from profile files into Keychain
 
 What makes this project different:
 

@@ -46,6 +46,12 @@ anthro-env doctor
 anthro-env -v
 ```
 
+如果你之前的 profile 文件里有明文 `ANTHROPIC_AUTH_TOKEN`：
+
+```bash
+anthro-env migrate-tokens
+```
+
 ## 配置示例（已脱敏）
 
 以下示例基于真实可用配置，API Key 已脱敏。  

@@ -26,3 +26,4 @@ Tokens are stored in the macOS Keychain by default instead of being written to p
 - `ANTHROPIC_AUTH_TOKEN` is stored in macOS Keychain.
 - Profile files contain non-secret metadata only.
 - `anthro-env env` exports variables to the current shell through hook scripts.
+- If old profiles contain plaintext token, run `anthro-env migrate-tokens`.

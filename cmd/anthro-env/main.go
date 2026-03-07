@@ -32,6 +32,8 @@ func run(args []string) error {
 	case "-v", "--version", "version":
 		fmt.Printf("anthro-env %s\n", version)
 		return nil
+	case "migrate-tokens":
+		return runMigrateTokens(mgr)
 	case "menu":
 		return runMenu(mgr)
 	case "init":
@@ -287,6 +289,18 @@ func runDoctor(mgr *core.Manager) error {
 	return nil
 }
 
+func runMigrateTokens(mgr *core.Manager) error {
+	migrated, skipped, err := mgr.MigratePlaintextTokens()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Token migration finished. migrated=%d skipped=%d\n", migrated, skipped)
+	if migrated > 0 {
+		fmt.Println("Plaintext ANTHROPIC_AUTH_TOKEN has been removed from migrated profile files.")
+	}
+	return nil
+}
+
 func runExport(mgr *core.Manager) error {
 	snippet, err := mgr.ExportSnippet()
 	if err != nil {
@@ -299,6 +313,7 @@ func runExport(mgr *core.Manager) error {
 func printUsage() {
 	fmt.Println(`anthro-env commands:
   anthro-env -v | --version
+  anthro-env migrate-tokens
   anthro-env init
   anthro-env menu
   anthro-env add <name>

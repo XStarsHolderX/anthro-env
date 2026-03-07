@@ -138,6 +138,21 @@ CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 - Token 生效优先级：`Keychain > .env`。  
   如果两边都存在，以 Keychain 为准。
 
+## 手动新增 profile 文件（自动发现）
+
+`anthro-env` 会自动扫描 `~/.config/anthropic/profiles/*.env`。  
+如果你手动放入新的 `xxx.env`，会自动出现在：
+
+- `anthro-env ls`
+- `anthro-env menu`
+- `anthro-env use xxx`
+
+如果该文件里有明文 `ANTHROPIC_AUTH_TOKEN`，建议执行：
+
+```bash
+anthro-env migrate-tokens
+```
+
 ## 源码编译（给极客用户）
 
 如果你希望本地编译或参与开发：

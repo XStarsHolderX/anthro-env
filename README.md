@@ -167,6 +167,18 @@ What makes this project different:
 - Active profile pointer: `~/.config/anthropic/current`
 - Token storage: macOS Keychain (`service=anthro-env`)
 
+Profiles are auto-discovered from `~/.config/anthropic/profiles/*.env`.
+If you manually add a new `xxx.env` file in that directory, it will be available in:
+- `anthro-env ls`
+- `anthro-env menu`
+- `anthro-env use xxx`
+
+If that file contains plaintext `ANTHROPIC_AUTH_TOKEN`, run:
+
+```bash
+anthro-env migrate-tokens
+```
+
 ## Security
 
 - Tokens are stored in macOS Keychain.

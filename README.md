@@ -6,6 +6,7 @@ English | [中文](README.zh.md)
 [![Homebrew Tap](https://img.shields.io/badge/Homebrew-kelaocai%2Fhomebrew--tap-blue)](https://github.com/kelaocai/homebrew-tap)
 
 A CLI-first macOS tool for switching Claude Code / Anthropic environment profiles.
+A CLI tool for managing Claude-compatible API environments and switching between AI providers.
 
 ## Why this exists
 

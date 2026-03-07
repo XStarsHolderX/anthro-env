@@ -1,0 +1,256 @@
+package core
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+
+	"github.com/anthro-env/anthro-env/internal/secure"
+)
+
+var anthroVars = []string{
+	"ANTHROPIC_BASE_URL",
+	"ANTHROPIC_AUTH_TOKEN",
+	"API_TIMEOUT_MS",
+	"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+	"ANTHROPIC_MODEL",
+	"ANTHROPIC_SMALL_FAST_MODEL",
+	"ANTHROPIC_DEFAULT_SONNET_MODEL",
+	"ANTHROPIC_DEFAULT_OPUS_MODEL",
+	"ANTHROPIC_DEFAULT_HAIKU_MODEL",
+}
+
+type Manager struct {
+	baseDir     string
+	profilesDir string
+	currentFile string
+}
+
+type DoctorReport struct {
+	Status  string
+	Message string
+}
+
+func NewManager() *Manager {
+	home, _ := os.UserHomeDir()
+	base := filepath.Join(home, ".config", "anthropic")
+	return &Manager{
+		baseDir:     base,
+		profilesDir: filepath.Join(base, "profiles"),
+		currentFile: filepath.Join(base, "current"),
+	}
+}
+
+func (m *Manager) ProfilesDir() string {
+	return m.profilesDir
+}
+
+func (m *Manager) EnsureLayout() error {
+	if err := os.MkdirAll(m.profilesDir, 0o700); err != nil {
+		return err
+	}
+	_ = os.Chmod(m.baseDir, 0o700)
+	_ = os.Chmod(m.profilesDir, 0o700)
+	return nil
+}
+
+func (m *Manager) SaveProfile(name string, vars map[string]string) error {
+	if err := m.EnsureLayout(); err != nil {
+		return err
+	}
+	path := filepath.Join(m.profilesDir, name+".env")
+
+	keys := make([]string, 0, len(vars))
+	for k := range vars {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	var b strings.Builder
+	b.WriteString("# Managed by anthro-env\n")
+	b.WriteString("# Token is stored in macOS Keychain\n")
+	for _, k := range keys {
+		v := strings.TrimSpace(vars[k])
+		if v == "" {
+			continue
+		}
+		b.WriteString(fmt.Sprintf("%s=%s\n", k, shellQuote(v)))
+	}
+	if err := os.WriteFile(path, []byte(b.String()), 0o600); err != nil {
+		return err
+	}
+	_ = os.Chmod(path, 0o600)
+	return nil
+}
+
+func (m *Manager) UseProfile(name string) error {
+	if err := m.EnsureLayout(); err != nil {
+		return err
+	}
+	path := filepath.Join(m.profilesDir, name+".env")
+	if _, err := os.Stat(path); err != nil {
+		return fmt.Errorf("profile not found: %s", name)
+	}
+	content := "# Last active profile for anthro-env auto-restore.\n" +
+		"# Edit with: anthro-env profile use <name>\n" +
+		"ACTIVE_PROFILE=" + name + "\n"
+	if err := os.WriteFile(m.currentFile, []byte(content), 0o600); err != nil {
+		return err
+	}
+	_ = os.Chmod(m.currentFile, 0o600)
+	return nil
+}
+
+func (m *Manager) RemoveProfile(name string) error {
+	path := filepath.Join(m.profilesDir, name+".env")
+	if err := os.Remove(path); err != nil {
+		return err
+	}
+	_ = secure.DeleteToken(name)
+	active, _ := m.CurrentProfile()
+	if active == name {
+		_ = os.Remove(m.currentFile)
+	}
+	return nil
+}
+
+func (m *Manager) ListProfiles() ([]string, error) {
+	if err := m.EnsureLayout(); err != nil {
+		return nil, err
+	}
+	entries, err := os.ReadDir(m.profilesDir)
+	if err != nil {
+		return nil, err
+	}
+	out := make([]string, 0)
+	for _, e := range entries {
+		if e.IsDir() {
+			continue
+		}
+		name := e.Name()
+		if strings.HasSuffix(name, ".env") {
+			out = append(out, strings.TrimSuffix(name, ".env"))
+		}
+	}
+	return out, nil
+}
+
+func (m *Manager) CurrentProfile() (string, error) {
+	data, err := os.ReadFile(m.currentFile)
+	if err != nil {
+		return "", err
+	}
+	lines := strings.Split(string(data), "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if strings.HasPrefix(line, "ACTIVE_PROFILE=") {
+			return strings.TrimSpace(strings.TrimPrefix(line, "ACTIVE_PROFILE=")), nil
+		}
+	}
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		return line, nil
+	}
+	return "", fmt.Errorf("active profile not set")
+}
+
+func (m *Manager) ProfileModel(name string) (string, error) {
+	vars, err := m.ReadProfile(name)
+	if err != nil {
+		return "", err
+	}
+	if v := vars["ANTHROPIC_MODEL"]; strings.TrimSpace(v) != "" {
+		return v, nil
+	}
+	if v := vars["ANTHROPIC_SMALL_FAST_MODEL"]; strings.TrimSpace(v) != "" {
+		return v, nil
+	}
+	return "", nil
+}
+
+func (m *Manager) ReadProfile(name string) (map[string]string, error) {
+	path := filepath.Join(m.profilesDir, name+".env")
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return ParseEnv(string(data)), nil
+}
+
+func (m *Manager) SaveToken(name, token string) error {
+	return secure.SaveToken(name, token)
+}
+
+func (m *Manager) ExportSnippet() (string, error) {
+	active, err := m.CurrentProfile()
+	if err != nil {
+		return "", err
+	}
+	vars, err := m.ReadProfile(active)
+	if err != nil {
+		return "", err
+	}
+	token, _ := secure.ReadToken(active)
+	if token != "" {
+		vars["ANTHROPIC_AUTH_TOKEN"] = token
+	}
+	var b strings.Builder
+	for _, k := range anthroVars {
+		b.WriteString("unset ")
+		b.WriteString(k)
+		b.WriteString("\n")
+	}
+	for k, v := range vars {
+		if strings.TrimSpace(v) == "" {
+			continue
+		}
+		b.WriteString("export ")
+		b.WriteString(k)
+		b.WriteString("=")
+		b.WriteString(shellQuote(v))
+		b.WriteString("\n")
+	}
+	return b.String(), nil
+}
+
+func (m *Manager) Doctor() []DoctorReport {
+	reports := make([]DoctorReport, 0)
+	if err := m.EnsureLayout(); err != nil {
+		reports = append(reports, DoctorReport{Status: "FAIL", Message: "Cannot create ~/.config/anthropic: " + err.Error()})
+		return reports
+	}
+	reports = append(reports, DoctorReport{Status: "OK", Message: "Config directory exists: " + m.baseDir})
+	if _, err := os.Stat(m.currentFile); err != nil {
+		reports = append(reports, DoctorReport{Status: "WARN", Message: "No active profile set"})
+	} else {
+		reports = append(reports, DoctorReport{Status: "OK", Message: "Active profile file exists"})
+	}
+	profiles, err := m.ListProfiles()
+	if err != nil || len(profiles) == 0 {
+		reports = append(reports, DoctorReport{Status: "WARN", Message: "No profiles found"})
+	} else {
+		reports = append(reports, DoctorReport{Status: "OK", Message: fmt.Sprintf("Profiles found: %d", len(profiles))})
+	}
+	if _, err := os.Stat(filepath.Join(os.Getenv("HOME"), ".zshrc")); err == nil {
+		zshData, _ := os.ReadFile(filepath.Join(os.Getenv("HOME"), ".zshrc"))
+		if strings.Contains(string(zshData), "anthro-env hook zsh") {
+			reports = append(reports, DoctorReport{Status: "OK", Message: "zsh hook installed"})
+		} else {
+			reports = append(reports, DoctorReport{Status: "WARN", Message: "zsh hook not found; run anthro-env init"})
+		}
+	}
+	active, err := m.CurrentProfile()
+	if err == nil && active != "" {
+		if _, err := secure.ReadToken(active); err != nil {
+			reports = append(reports, DoctorReport{Status: "WARN", Message: "Keychain token missing or inaccessible for active profile"})
+		} else {
+			reports = append(reports, DoctorReport{Status: "OK", Message: "Keychain token is accessible"})
+		}
+	}
+	return reports
+}

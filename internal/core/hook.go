@@ -80,7 +80,7 @@ anthro_env_cmd() {
   local rc=$?
   if [ $rc -eq 0 ]; then
     case "$1:$2" in
-      ":"|"menu:"|"init:"|"profile:use"|"profile:rm") _anthro_env_sync ;;
+      ":"|"menu:"|"init:"|"add:"|"use:"|"rm:"|"profile:use"|"profile:rm") _anthro_env_sync ;;
     esac
   fi
   return $rc
@@ -103,7 +103,7 @@ anthro_env_cmd() {
   local rc=$?
   if [ $rc -eq 0 ]; then
     case "$1:$2" in
-      ":"|"menu:"|"init:"|"profile:use"|"profile:rm") _anthro_env_sync ;;
+      ":"|"menu:"|"init:"|"add:"|"use:"|"rm:"|"profile:use"|"profile:rm") _anthro_env_sync ;;
     esac
   fi
   return $rc

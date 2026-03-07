@@ -17,4 +17,4 @@ anthro-env doctor
 ## Keychain access failed
 
 - Confirm keychain is unlocked.
-- Re-run `anthro-env profile add <name>` and enter token again.
+- Re-run `anthro-env add <name>` and enter token again.

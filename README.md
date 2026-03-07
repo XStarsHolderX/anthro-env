@@ -51,11 +51,11 @@ anthro-env menu
 ```bash
 anthro-env init
 anthro-env menu
-anthro-env profile add <name>
-anthro-env profile use <name>
-anthro-env profile ls
-anthro-env profile current
-anthro-env profile rm <name>
+anthro-env add <name>
+anthro-env use <name>
+anthro-env ls
+anthro-env current
+anthro-env rm <name>
 anthro-env doctor
 ```
 

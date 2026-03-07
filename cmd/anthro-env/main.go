@@ -31,6 +31,8 @@ func run(args []string) error {
 		return runMenu(mgr)
 	case "init":
 		return runInit(mgr)
+	case "add", "use", "ls", "current", "rm":
+		return runProfile(mgr, args)
 	case "doctor":
 		return runDoctor(mgr)
 	case "hook":
@@ -42,6 +44,7 @@ func run(args []string) error {
 	case "env", "export":
 		return runExport(mgr)
 	case "profile":
+		// Backward compatibility for older syntax.
 		return runProfile(mgr, args[1:])
 	case "help", "-h", "--help":
 		printUsage()
@@ -127,7 +130,7 @@ func runMenu(mgr *core.Manager) error {
 		return err
 	}
 	if len(profiles) == 0 {
-		return fmt.Errorf("no profiles. run: anthro-env init or anthro-env profile add <name>")
+		return fmt.Errorf("no profiles. run: anthro-env init or anthro-env add <name>")
 	}
 	sort.Strings(profiles)
 	active, _ := mgr.CurrentProfile()
@@ -174,7 +177,7 @@ func runMenu(mgr *core.Manager) error {
 
 func runProfile(mgr *core.Manager, args []string) error {
 	if len(args) == 0 {
-		return errors.New("usage: anthro-env profile <add|use|ls|current|rm>")
+		return errors.New("usage: anthro-env <add|use|ls|current|rm>")
 	}
 
 	switch args[0] {
@@ -203,7 +206,7 @@ func runProfile(mgr *core.Manager, args []string) error {
 		return nil
 	case "use":
 		if len(args) < 2 {
-			return errors.New("usage: anthro-env profile use <name>")
+			return errors.New("usage: anthro-env use <name>")
 		}
 		if err := mgr.UseProfile(args[1]); err != nil {
 			return err
@@ -212,7 +215,7 @@ func runProfile(mgr *core.Manager, args []string) error {
 		return nil
 	case "add":
 		if len(args) < 2 {
-			return errors.New("usage: anthro-env profile add <name>")
+			return errors.New("usage: anthro-env add <name>")
 		}
 		name := args[1]
 		if !core.ValidProfileName(name) {
@@ -259,7 +262,7 @@ func runProfile(mgr *core.Manager, args []string) error {
 		return nil
 	case "rm":
 		if len(args) < 2 {
-			return errors.New("usage: anthro-env profile rm <name>")
+			return errors.New("usage: anthro-env rm <name>")
 		}
 		if err := mgr.RemoveProfile(args[1]); err != nil {
 			return err
@@ -292,11 +295,11 @@ func printUsage() {
 	fmt.Println(`anthro-env commands:
   anthro-env init
   anthro-env menu
-  anthro-env profile add <name>
-  anthro-env profile use <name>
-  anthro-env profile ls
-  anthro-env profile current
-  anthro-env profile rm <name>
+  anthro-env add <name>
+  anthro-env use <name>
+  anthro-env ls
+  anthro-env current
+  anthro-env rm <name>
   anthro-env hook <zsh|bash>
   anthro-env doctor`)
 }

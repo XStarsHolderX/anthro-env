@@ -68,6 +68,43 @@ If you already have plaintext `ANTHROPIC_AUTH_TOKEN` in old profile files:
 anthro-env migrate-tokens
 ```
 
+### Detailed usage: `edit`
+
+```bash
+anthro-env edit <name>
+```
+
+During edit:
+- `ANTHROPIC_BASE_URL`: press Enter to keep current value
+- `ANTHROPIC_MODEL`: press Enter to keep, input `-` to clear (use gateway default)
+- `ANTHROPIC_AUTH_TOKEN`: press Enter to keep Keychain value, input `-` to delete token from Keychain, input new value to overwrite
+
+Example:
+
+```bash
+anthro-env edit ai-router
+anthro-env use ai-router
+anthro-env doctor
+```
+
+### Detailed usage: `migrate-tokens`
+
+```bash
+anthro-env migrate-tokens
+```
+
+What it does:
+- reads plaintext `ANTHROPIC_AUTH_TOKEN` from profile files
+- writes token into macOS Keychain for each profile
+- removes plaintext token from profile files
+- prints migration summary (`migrated` / `skipped`)
+
+Recommended verification:
+
+```bash
+anthro-env doctor
+```
+
 ## Profile Examples (redacted)
 
 These examples are based on real-world provider setups, with API keys masked.

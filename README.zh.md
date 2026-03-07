@@ -53,6 +53,43 @@ anthro-env -v
 anthro-env migrate-tokens
 ```
 
+### 详细用法：`edit`
+
+```bash
+anthro-env edit <name>
+```
+
+交互规则：
+- `ANTHROPIC_BASE_URL`：直接回车 = 保留原值
+- `ANTHROPIC_MODEL`：直接回车 = 保留；输入 `-` = 清空（走网关默认模型）
+- `ANTHROPIC_AUTH_TOKEN`：直接回车 = 保留 Keychain 当前值；输入 `-` = 从 Keychain 删除；输入新值 = 覆盖
+
+示例：
+
+```bash
+anthro-env edit ai-router
+anthro-env use ai-router
+anthro-env doctor
+```
+
+### 详细用法：`migrate-tokens`
+
+```bash
+anthro-env migrate-tokens
+```
+
+这个命令会：
+- 读取 profile 文件中的明文 `ANTHROPIC_AUTH_TOKEN`
+- 写入对应 profile 的 macOS Keychain
+- 从 profile 文件删除明文 token
+- 输出迁移统计（`migrated` / `skipped`）
+
+建议迁移后执行：
+
+```bash
+anthro-env doctor
+```
+
 ## 配置示例（已脱敏）
 
 以下示例基于真实可用配置，API Key 已脱敏。  

